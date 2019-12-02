@@ -10,6 +10,8 @@ server.get('/', (req,res) => {
     res.send({API: 'up and running'})
 });
 
+server.use(express.json()); //<<<<<<<< needed to parse JSON from req.body
+
 //list of hubs GET /hubs <<< 2: implement endpoint
 server.get('/hubs', (req, res) => {
     //get the list of hubs from the database
@@ -18,11 +20,24 @@ server.get('/hubs', (req, res) => {
         res.status(200).json(hubs)
     })
     .catch(err => {
-        res.status(500).json(err, 'Could not get the database')
+        console.log(err, 'error on GET /hubs')
+        res.status(500).json({ errorMessage: 'Could not get the database' })
     })
    
 })
 //add a hub
+server.post('/hubs', (req,res) => {
+    //get the data the client sent
+    const hubData = req.body; //express doesn't know how to parse JSON, so you have to go add the server.use(express.json())
+    Hubs.add(hubData)
+    .then(hub => {
+        res.status(201).json(hub)
+    })
+    .catch(err => {
+        console.log(err, 'error on POST /hubs')
+        res.status(500).json({ errorMessage: 'Could not add data to the database' })
+    })
+})
 
 //remove a hub
 
