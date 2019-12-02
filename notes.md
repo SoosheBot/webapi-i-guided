@@ -6,4 +6,4 @@ run the api in the terminal with `npm run server`
 test making a GET request to the localhost you selected
 
 
-*** sidenote about the homeys-- req and res --> the client sends a `request` to the server, and the server sends a `response` to the client ***
+*** sidenote about the homeys-- req and res --> the [client] sends a `request` to the [server], then, the [server] sends a `response` to the [client] ***
