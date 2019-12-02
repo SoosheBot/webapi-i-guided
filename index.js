@@ -34,12 +34,27 @@ server.post('/hubs', (req,res) => {
         res.status(201).json(hub)
     })
     .catch(err => {
-        console.log(err, 'error on POST /hubs')
-        res.status(500).json({ errorMessage: 'Could not add data to the database' })
+        console.log(err, 'error on GET /hubs')
+        res.status(500).json({ errorMessage: 'Could not get the database' })
     })
 })
 
 //remove a hub
+server.delete('/hubs/:id', (req,res) => {
+    const id = req.params.id;
+    Hubs.remove(id)
+    .then(removed => {
+        if (removed) {
+            res.status(200).json({message: `ID #${id} was successfully removed`, removed})
+        } else {
+            res.status(404).json({errorMessage: `ID #${id} was not found or does not exist`})
+        } 
+    })
+    .catch(err => {
+        console.log(err, 'error on GET /hubs')
+        res.status(500).json({ errorMessage: `Could not delete ID #${id} from database` })
+    })
+})
 
 //update a hub
 
